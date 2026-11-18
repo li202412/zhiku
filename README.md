@@ -91,7 +91,7 @@ flowchart LR
 cd backend
 uv run python scripts/eval_ingest.py --n-query 50 --n-doc 200   # 注入评测语料（DuRetrieval 子集）
 uv run python scripts/eval_recall.py --limit 10                 # 检索指标
-uv run python scripts/eval_end2end.py --n 30                    # 答案质量 + 延迟
+uv run python scripts/eval_end2end.py --n-samples 30            # 答案质量 + 延迟
 ```
 
 > ⏳ **基线数字待首次评测固化**。此处刻意不写未实测的数字；跑完会把结果落到 `evals/results/<sha>.json` 并回填本表（见 [Roadmap](docs/ROADMAP.md) 的 P0-1）。
