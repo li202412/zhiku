@@ -36,6 +36,7 @@ sys.path.insert(0, str(BACKEND))
 import pandas as pd  # noqa: E402
 from langchain_core.messages import HumanMessage, SystemMessage  # noqa: E402
 
+from app.core.settings import settings  # noqa: E402
 from app.rag.agentic_rag.service import AgenticRagService  # noqa: E402
 from app.utils.factory import ChatModelFactory  # noqa: E402
 from app.utils.prompt_loader import load_prompt  # noqa: E402
@@ -277,10 +278,17 @@ async def main() -> None:
     ap.add_argument("--n-negatives", type=int, default=20, help="拒答样本数；0 表示不测拒答")
     ap.add_argument("--answer-prompt", choices=["product", "product_notool", "legacy"], default="product")
     ap.add_argument("--allow-web", action="store_true", help="允许外部搜索兜底（默认关闭，否则拒答判定失真）")
+    ap.add_argument("--evidence-gate", action="store_true", help="启用证据筛选：只把可答性评估选中的证据送入上下文")
+    ap.add_argument("--require-retrieval", action="store_true", help="禁止规划器「无需检索」短路，强制先检索知识库")
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--warmup", type=int, default=1)
     ap.add_argument("--max-evidence-chars", type=int, default=6000)
     args = ap.parse_args()
+
+    if args.evidence_gate:
+        settings.EVIDENCE_GATE_ENABLED = True
+    if args.require_retrieval:
+        settings.PLANNER_REQUIRE_RETRIEVAL = True
 
     m = json.loads(args.manifest.read_text(encoding="utf-8"))
     user_id = m["user_id"]
@@ -338,6 +346,8 @@ async def main() -> None:
         rag_ms = (time.time() - t0) * 1000.0
         evidence = (result.context or "")[: args.max_evidence_chars]
         ev_count = len(result.evidences)
+        # 源文档是否真的被召回：未召回属「检索失败」，不能算作「答案错误」
+        source_hit = any(str(ev.metadata.get("source_id") or "") == doc_id for ev in result.evidences)
 
         system_prompt = _build_answer_prompt(args.answer_prompt, result.context or "", default_prompt)
         answer, first_ms = await _stream_answer(chat, system_prompt, q)
@@ -357,7 +367,8 @@ async def main() -> None:
 
         rows.append({
             "doc_id": doc_id, "question": q, "reference_answer": ref, "answer": answer,
-            "evidence_count": ev_count, "faithfulness": faithfulness, "correctness": correctness,
+            "evidence_count": ev_count, "source_hit": source_hit,
+            "faithfulness": faithfulness, "correctness": correctness,
             "faithful_reason": f_reason, "correct_reason": c_reason,
             "rag_ms": round(rag_ms, 1), "answer_first_token_ms": round(first_ms, 1) if first_ms else None,
             **{k: cite[k] for k in (
@@ -423,21 +434,32 @@ async def main() -> None:
               f"web={used_web} judge={category}")
         await asyncio.sleep(0.3)
 
-    n = max(1, len(rows))
+    # 答案质量只在「源文档确实被召回」的样本上统计：未命中的属检索失败，不该计入答案错误
+    quality = [r for r in rows if r.get("source_hit")]
+    nq = max(1, len(quality))
     covered = [r for r in rows if r["kb_titles"]]
     total_cited = sum(r["cited_total"] for r in rows)
     total_unknown = sum(r["cited_unknown"] for r in rows)
     neg_n = len(neg_rows)
     top1_scores = [r["top1_score"] for r in neg_rows if r["top1_score"] is not None]
 
+    def _ci95(values: list[float]) -> float | None:
+        if len(values) < 2:
+            return None
+        return round(1.96 * statistics.stdev(values) / (len(values) ** 0.5), 3)
+
     agg = {
         "n_samples": len(rows),
         "n_skipped": skipped,
-        "faithfulness_mean": round(sum(r["faithfulness"] for r in rows) / n, 3),
-        "correctness_mean": round(sum(r["correctness"] for r in rows) / n, 3),
-        "faithfulness_rate_4plus": round(sum(1 for r in rows if r["faithfulness"] >= 4) / n, 3),
-        "correctness_rate_4plus": round(sum(1 for r in rows if r["correctness"] >= 4) / n, 3),
-        "avg_evidence_count": round(sum(r["evidence_count"] for r in rows) / n, 2),
+        "n_retrieval_hit": len(quality),
+        "n_retrieval_miss": len(rows) - len(quality),
+        "faithfulness_mean": round(sum(r["faithfulness"] for r in quality) / nq, 3),
+        "correctness_mean": round(sum(r["correctness"] for r in quality) / nq, 3),
+        "faithfulness_ci95": _ci95([r["faithfulness"] for r in quality]),
+        "correctness_ci95": _ci95([r["correctness"] for r in quality]),
+        "faithfulness_rate_4plus": round(sum(1 for r in quality if r["faithfulness"] >= 4) / nq, 3),
+        "correctness_rate_4plus": round(sum(1 for r in quality if r["correctness"] >= 4) / nq, 3),
+        "avg_evidence_count": round(sum(r["evidence_count"] for r in quality) / nq, 2),
         "mean_rag_ms": round(statistics.mean(r["rag_ms"] for r in rows), 1),
         "mean_answer_first_token_ms": round(statistics.mean(
             r["answer_first_token_ms"] for r in rows if r["answer_first_token_ms"] is not None), 1),
@@ -484,6 +506,8 @@ async def main() -> None:
         "judge_model": model_name,
         "max_evidence_chars": args.max_evidence_chars,
         "web_allowed": bool(args.allow_web),
+        "evidence_gate": bool(args.evidence_gate),
+        "require_retrieval": bool(args.require_retrieval),
         "seed": args.seed,
         "n_requested": args.n_samples,
         "relevant_ratio": m.get("relevant_ratio"),
@@ -513,15 +537,17 @@ async def main() -> None:
     md.append(f"- 评测用户：`{user_id}`　正样本：{len(rows)}（跳过 {skipped}）　负样本：{neg_n}")
     md.append(f"- 口径：answer_prompt=`{args.answer_prompt}`（prompt_sha `{prompt_sha}`）／"
               f"web_allowed=`{args.allow_web}`／max_evidence_chars={args.max_evidence_chars}")
-    md.append("- 正样本题目从源正文自动生成，检索必然命中 → 衡量**答案质量**，不衡量检索难度")
+    md.append("- 正样本题目从源正文自动生成；答案质量只统计「源文档确实被召回」的样本，未命中单列为检索失败")
+    md.append(f"- evidence_gate=`{bool(args.evidence_gate)}`／require_retrieval=`{bool(args.require_retrieval)}`；± 为 95% 置信区间半宽")
     md.append("- 负样本取「相关文档全不在入库池内」的 query → 拒答准确率只作**上界**口径")
     md.append("")
     md.append("## 答案质量")
     md.append("")
     md.append("| 指标 | 值 |")
     md.append("|---|---|")
-    md.append(f"| 忠实度(1-5) | {agg['faithfulness_mean']:.2f} |")
-    md.append(f"| 正确性(1-5) | {agg['correctness_mean']:.2f} |")
+    md.append(f"| 检索命中源文档的样本 | {agg['n_retrieval_hit']}/{agg['n_samples']} |")
+    md.append(f"| 忠实度(1-5) | {agg['faithfulness_mean']:.2f}" + (f" ± {agg['faithfulness_ci95']:.2f}" if agg['faithfulness_ci95'] else "") + " |")
+    md.append(f"| 正确性(1-5) | {agg['correctness_mean']:.2f}" + (f" ± {agg['correctness_ci95']:.2f}" if agg['correctness_ci95'] else "") + " |")
     md.append(f"| 忠实度≥4 占比 | {agg['faithfulness_rate_4plus']:.3f} |")
     md.append(f"| 正确性≥4 占比 | {agg['correctness_rate_4plus']:.3f} |")
     md.append(f"| 平均证据条数 | {agg['avg_evidence_count']:.2f} |")

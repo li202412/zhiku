@@ -18,12 +18,20 @@
       "mrr": 0.987,
       "ndcg@10": 0.9607,
       "map": 0.9222,
+      "recall@1_ceiling": 0.3274,
+      "recall@1_achievement": 0.98,
+      "recall@3_ceiling": 0.7072,
+      "recall@3_achievement": 0.945,
+      "recall@5_ceiling": 0.9021,
+      "recall@5_achievement": 0.9515,
+      "recall@10_ceiling": 0.992,
+      "recall@10_achievement": 0.9768,
       "latency_ms": {
-        "p50": 249.4,
-        "p90": 294.7,
-        "p95": 326.0,
-        "mean": 254.1,
-        "max": 380.4
+        "p50": 248.1,
+        "p90": 306.4,
+        "p95": 348.4,
+        "mean": 252.6,
+        "max": 451.7
       }
     }
   },
@@ -31,7 +39,7 @@
     {
       "query_id": "ec9b21e0aa8bc5c75704a1ab48fa293b",
       "query": "保妇康栓要用多久",
-      "latency_ms": 342.2,
+      "latency_ms": 451.7,
       "top_doc_ids": [
         "dfbf9cfba18f30ae1b19cf9dc82f19dc",
         "5b6a99480fac78c7148a970f91c2b518",
@@ -60,7 +68,7 @@
     {
       "query_id": "e615e279eb5afbb5cdc6ae232814cc5a",
       "query": "天然无添加的护肤品存在吗",
-      "latency_ms": 289.3,
+      "latency_ms": 261.8,
       "top_doc_ids": [
         "dc0cab823a5bd5541139ec89be4fd021",
         "47cd740522c8824b125c758df1206c5d",
@@ -89,7 +97,7 @@
     {
       "query_id": "2832d65fe16d3a96592e8772ccd6d0aa",
       "query": "神秘博士clara是谁",
-      "latency_ms": 247.5,
+      "latency_ms": 233.0,
       "top_doc_ids": [
         "33bbba930daabd572f1f826f562e4781",
         "6f51319d423888b27f316e81fd98c59e",
@@ -118,7 +126,7 @@
     {
       "query_id": "78218375f1ecad1fe42d01921d0e50a3",
       "query": "如何除去体内寒气",
-      "latency_ms": 266.1,
+      "latency_ms": 256.0,
       "top_doc_ids": [
         "be4ced7f267353e4e544041b449e9f1d",
         "4fe6c549f5c0148a00fbb79b41c8fc6f",
@@ -147,7 +155,7 @@
     {
       "query_id": "940c8d12a0f971982002ebb948f1ee42",
       "query": "1click 什么意思",
-      "latency_ms": 234.3,
+      "latency_ms": 249.6,
       "top_doc_ids": [
         "844d63445f7aa8dbb7c127aef6f164cb",
         "268db808be78e2f0c91c1721bf11e661",
@@ -176,7 +184,7 @@
     {
       "query_id": "2c929855181064e320ae299e0ae58209",
       "query": "牙源性鼻窦炎治疗",
-      "latency_ms": 295.0,
+      "latency_ms": 302.1,
       "top_doc_ids": [
         "52a08bfeb30f6b94ee48a7607894af92",
         "864fa3248ea71e61a2e838548dc08610",
@@ -205,7 +213,7 @@
     {
       "query_id": "28f098d547faba7b8c5564df53b01265",
       "query": "哥窑瓷器值多少钱",
-      "latency_ms": 237.3,
+      "latency_ms": 215.6,
       "top_doc_ids": [
         "c4f3c42281bc0517ebce7ddbf40b6a49",
         "ea16ce74b6d0c2bb3041c629986b4630",
@@ -233,7 +241,7 @@
     {
       "query_id": "e926696c6b305b668137ca0a9c05cd1f",
       "query": "连体马桶盖怎么拆下来",
-      "latency_ms": 202.0,
+      "latency_ms": 220.5,
       "top_doc_ids": [
         "93248afe455f6c3ffa8e48f5f6703172",
         "b6f7ea72ae19a9a962637c23accb3103",
@@ -262,7 +270,7 @@
     {
       "query_id": "7c0a87d2d4becde8eda89c601a74fe97",
       "query": "天刀有插件吗",
-      "latency_ms": 209.3,
+      "latency_ms": 306.4,
       "top_doc_ids": [
         "3e0a5dba2414cdc7582f93efd49e135b",
         "1d9325112d321ca0cc36c7cbda96a5be",
@@ -291,7 +299,7 @@
     {
       "query_id": "fca83b9fdea8db711f78fa06338430e1",
       "query": "水产生意好做吗",
-      "latency_ms": 257.7,
+      "latency_ms": 209.0,
       "top_doc_ids": [
         "7312c5a9c9c4a24c5ddd6c3531c93e83",
         "89c09bfdb610c35d68dd7c01a58d2fa9",
@@ -320,7 +328,7 @@
     {
       "query_id": "c0fd15c87ade754d332b7753ee178075",
       "query": "would like的回答",
-      "latency_ms": 274.7,
+      "latency_ms": 348.4,
       "top_doc_ids": [
         "1b86861fea178f7c20eb5973e4002ae8",
         "7e23808d0c4ed3667d61da2a3850c51e",
@@ -349,7 +357,7 @@
     {
       "query_id": "954ec2bb0fb63844c41ff5dcf4e8318a",
       "query": "华硕a450怎么样",
-      "latency_ms": 237.9,
+      "latency_ms": 235.4,
       "top_doc_ids": [
         "7a6ca899490c1949417973c040c5062a",
         "b8e0a91d6ffe61ad36b9f1e5386f42df",
@@ -378,7 +386,7 @@
     {
       "query_id": "651ac2950b16b2cccc0e621059a5e193",
       "query": "htc one m8t和m8w有什么区别",
-      "latency_ms": 258.1,
+      "latency_ms": 332.9,
       "top_doc_ids": [
         "2e2794bb8268cb7c2cece40162f90fa6",
         "0f7118452bd81963fe99a35ac1776fca",
@@ -407,7 +415,7 @@
     {
       "query_id": "a3594f1f61afb2c73c6d33fca7c29364",
       "query": "飞秋如何共享文件",
-      "latency_ms": 279.1,
+      "latency_ms": 208.5,
       "top_doc_ids": [
         "66353e348b10f72210ef632d3a917b5d",
         "65cd54aa1bd7dfc119fe69b35bae8bd4",
@@ -436,7 +444,7 @@
     {
       "query_id": "a6921c13a716ded1d92d6784fedc87e4",
       "query": "怎样练内力",
-      "latency_ms": 239.5,
+      "latency_ms": 204.9,
       "top_doc_ids": [
         "6d08236c048675431c0a03d0ce37ee52",
         "97ed931ec7ca644f71507032daea9ff9",
@@ -464,7 +472,7 @@
     {
       "query_id": "092b7a3f77716be5e5c105b8fa998d5e",
       "query": "经济处于充分就业是指",
-      "latency_ms": 279.8,
+      "latency_ms": 271.8,
       "top_doc_ids": [
         "44423cb39b62f919c85af6c97ed42b49",
         "08146efadc3c3c2bfb7300d9712b2b14",
@@ -493,7 +501,7 @@
     {
       "query_id": "f1d4d7a9c08c8ded477398a78aa71024",
       "query": "玩梦幻西游怎么赚钱",
-      "latency_ms": 227.1,
+      "latency_ms": 224.4,
       "top_doc_ids": [
         "977a41472177d78bf0322d5cbdb5bdca",
         "74677b5abad085ab7e7b6a7c770ff391",
@@ -522,7 +530,7 @@
     {
       "query_id": "bdbdb201ee28b0531a3da49679abcfe1",
       "query": "怎样给婴儿晒太阳",
-      "latency_ms": 243.5,
+      "latency_ms": 274.3,
       "top_doc_ids": [
         "71e96aa9e01f74aa6d643a83d992da48",
         "02e2c178205b6291d6fd7214f3183198",
@@ -551,7 +559,7 @@
     {
       "query_id": "4bfbb1e85e4090fc987a56852e93ba49",
       "query": "泰拉瑞亚叶绿套和乌龟套哪个好",
-      "latency_ms": 213.1,
+      "latency_ms": 206.3,
       "top_doc_ids": [
         "a8c9196ef0ebb87db8bc7652a1358599",
         "9ba48130fc12bab2b4163ef4c4c2f1c9",
@@ -580,7 +588,7 @@
     {
       "query_id": "326531cf3b52bdff59849055dfd8a9bf",
       "query": "北京机动车过户地点",
-      "latency_ms": 206.8,
+      "latency_ms": 208.8,
       "top_doc_ids": [
         "f7062b8b2ed55b726b4a4b5bd734d5ae",
         "ad8ab60b87645506b01038cd2a79daec",
@@ -609,7 +617,7 @@
     {
       "query_id": "f2067f9901effb908bc6278cd2e9dbe0",
       "query": "向内求是什么意思",
-      "latency_ms": 262.3,
+      "latency_ms": 380.1,
       "top_doc_ids": [
         "8d5ad67915535c3f3cd1a3646eb776ee",
         "97ed931ec7ca644f71507032daea9ff9",
@@ -638,7 +646,7 @@
     {
       "query_id": "649d02b78bd3c6ba5e3ab83e46a07929",
       "query": "为什么京东商城打不开",
-      "latency_ms": 233.1,
+      "latency_ms": 290.3,
       "top_doc_ids": [
         "ecdb5db285bdc293fbc92c9d0fccdf50",
         "be9f82109e025e509e01e81173028dcc",
@@ -667,7 +675,7 @@
     {
       "query_id": "a2efb58f015ae83713d175f52cbb953b",
       "query": "类似隐形人的电影",
-      "latency_ms": 204.0,
+      "latency_ms": 266.9,
       "top_doc_ids": [
         "79a491de3d8f8b75d9f323cd36b95712",
         "61839030883151a13a8871166ece35d5",
@@ -696,7 +704,7 @@
     {
       "query_id": "da4f0ae745db0575544fa33ab4cbdac9",
       "query": "出去旅游穿什么鞋",
-      "latency_ms": 230.9,
+      "latency_ms": 272.7,
       "top_doc_ids": [
         "3365b64bd30544ad3ef3384d4bcf8a5a",
         "3cf3fd21eedbf6d4795378b6adad98c8",
@@ -725,7 +733,7 @@
     {
       "query_id": "307ccd3bd89878631871ebfe67e7252c",
       "query": "曝光补偿是什么意思",
-      "latency_ms": 220.6,
+      "latency_ms": 207.1,
       "top_doc_ids": [
         "c6502f9c5d7062d3c89381ad65ad6a7e",
         "fce19d248e0971a26c310d0fd89ee564",
@@ -754,7 +762,7 @@
     {
       "query_id": "be79a018d9f502c5a7bd165817e73154",
       "query": "女人吃什么水果补肾",
-      "latency_ms": 225.0,
+      "latency_ms": 238.0,
       "top_doc_ids": [
         "5ee13f3a800e64dab808549cfd60764c",
         "132a77df8b74081285cbe6b5bebe4b06",
@@ -783,7 +791,7 @@
     {
       "query_id": "6c9da51f2ec4be8426842d16971d56c8",
       "query": "蘑菇街退货要先确认收货吗",
-      "latency_ms": 293.7,
+      "latency_ms": 249.1,
       "top_doc_ids": [
         "95a0bfb9338af0c79b03b042bf710aaf",
         "264cdcb480c8c0b11ca5e71505393f3e",
@@ -812,7 +820,7 @@
     {
       "query_id": "cf8772dd5b22ad9aa310adbc41f00087",
       "query": "狂犬疫苗多少针",
-      "latency_ms": 298.0,
+      "latency_ms": 255.2,
       "top_doc_ids": [
         "ec638a9ccb103139092067a85c583559",
         "f3d424ead881a03ab1393d2420f4a93e",
@@ -841,7 +849,7 @@
     {
       "query_id": "2f46e403a1763205f5470019a0a8780a",
       "query": "表示认真的成语",
-      "latency_ms": 294.7,
+      "latency_ms": 215.2,
       "top_doc_ids": [
         "9a7676db1d8d6dba62047c0442d36ed6",
         "599963fc2dbbe11c0bfe85f02514673a",
@@ -870,7 +878,7 @@
     {
       "query_id": "86e5850b24f03bc5c6a300410a46da0f",
       "query": "我的世界草地怎么弄",
-      "latency_ms": 281.9,
+      "latency_ms": 310.6,
       "top_doc_ids": [
         "df9ec7bb08e650e35b3a729326ff72d5",
         "2000b2ae10315819ec1d70bb9c2d432b",
@@ -899,7 +907,7 @@
     {
       "query_id": "2c998012382eff1583697f8724d82b40",
       "query": "溶血性贫血指标",
-      "latency_ms": 230.6,
+      "latency_ms": 228.3,
       "top_doc_ids": [
         "497a9530f09248b7d3e3afe985f8e922",
         "867f24c5956b8514d19263ea9d736699",
@@ -928,7 +936,7 @@
     {
       "query_id": "e0c3ddbca4d9dc3ca05fc5ab5c07243c",
       "query": "有关保护环境的歌曲",
-      "latency_ms": 262.2,
+      "latency_ms": 267.8,
       "top_doc_ids": [
         "03cea3dba36a81742a3cd43691ccf6c3",
         "67f3bf1210c943d4a840152734784803",
@@ -957,7 +965,7 @@
     {
       "query_id": "e299bfd14e7911a2110215d7c7d2872c",
       "query": "创业板如何购买",
-      "latency_ms": 267.7,
+      "latency_ms": 258.8,
       "top_doc_ids": [
         "36c8276ca09890e222fd0539608fbf0f",
         "355b2921089c7d713dbac5bdabb6c246",
@@ -986,7 +994,7 @@
     {
       "query_id": "8d1307b0d8dbb86ad290668c3a5112cc",
       "query": "香港身份证大小",
-      "latency_ms": 207.0,
+      "latency_ms": 265.5,
       "top_doc_ids": [
         "539a7e160b219b15231d9279165e6cff",
         "4dd6a534042dd20d6cf6cc8f0a92b9f9",
@@ -1015,7 +1023,7 @@
     {
       "query_id": "26f444760a51f0f198f22825c22c4b5e",
       "query": "红米note2增强版怎样刷机",
-      "latency_ms": 237.0,
+      "latency_ms": 217.2,
       "top_doc_ids": [
         "42970d5a371bb8f972543719cf469178",
         "86ce20f223a2a8d9ad1d8f85e15458a2",
@@ -1044,7 +1052,7 @@
     {
       "query_id": "66b75e44a85767260702de4cbb551e18",
       "query": "秋天可以喝红茶吗",
-      "latency_ms": 206.7,
+      "latency_ms": 226.4,
       "top_doc_ids": [
         "9aeb656f4a6e3736c9a311f32aa458f3",
         "5103b95244deb6e002a5cdd5b90aaec7",
@@ -1073,7 +1081,7 @@
     {
       "query_id": "56fbe9af1a53a6667b13693178693552",
       "query": "诺导在哪直播",
-      "latency_ms": 223.5,
+      "latency_ms": 212.0,
       "top_doc_ids": [
         "23e7ef05a81f57de1e6071c8382407d9",
         "aae44bc53d9d246f5fbba29eaf49eee7",
@@ -1102,7 +1110,7 @@
     {
       "query_id": "0a427cb6c8f3d4596620ae8aa788f521",
       "query": "子宫瘢痕向内凹陷形成一腔隙可以怀孕吗?",
-      "latency_ms": 235.1,
+      "latency_ms": 361.0,
       "top_doc_ids": [
         "854073b166651c4bcd81e77327796635",
         "a163e676d4aacb81b61cafb02bfce966",
@@ -1131,7 +1139,7 @@
     {
       "query_id": "170667efa5fa277585dd7ba8bb87fbd9",
       "query": "济南植发医院哪家好",
-      "latency_ms": 246.1,
+      "latency_ms": 256.2,
       "top_doc_ids": [
         "9a14715d2d501625fdda07ac90e54a2c",
         "78a5f773a5be6a23a8f1727bf22f9273",
@@ -1160,7 +1168,7 @@
     {
       "query_id": "fc93a36511361a11c1c5c7072cc5de5c",
       "query": "我的世界内置合成表怎么安装",
-      "latency_ms": 249.0,
+      "latency_ms": 274.0,
       "top_doc_ids": [
         "5143011041550c95fcc36f9db205eded",
         "e6a861bf2c49209c4f50a887716ef41b",
@@ -1189,7 +1197,7 @@
     {
       "query_id": "a2a5c76407d0523fbadbb2359754eef9",
       "query": "车牌号识别能破解吗",
-      "latency_ms": 252.8,
+      "latency_ms": 249.5,
       "top_doc_ids": [
         "eecad0b638d8cd1c2283eca1a975e448",
         "78f981751f3fcad73239027448400752",
@@ -1218,7 +1226,7 @@
     {
       "query_id": "b49b75a091a40f803f81b0ea429849df",
       "query": "cad导出pdf线条变粗",
-      "latency_ms": 294.7,
+      "latency_ms": 278.5,
       "top_doc_ids": [
         "75083771ed4d4df37fceea5bd5163d95",
         "7e2c743eec068aeda119142ae323bcda",
@@ -1247,7 +1255,7 @@
     {
       "query_id": "f9c0c37a12577d16c967efa9efc9d5c4",
       "query": "北京口腔专科医院有哪些",
-      "latency_ms": 239.9,
+      "latency_ms": 336.4,
       "top_doc_ids": [
         "56afac40d7ab93f22976e00ccbf95add",
         "0141638523ccca2e05bc3769dfc0d41e",
@@ -1276,7 +1284,7 @@
     {
       "query_id": "b9b026f8548d7322af10022b55e588e5",
       "query": "dnf更新错误号266",
-      "latency_ms": 228.6,
+      "latency_ms": 275.4,
       "top_doc_ids": [
         "93563d20edf6a317209d9716d36fc173",
         "9e7fdbbf63087795050c65998ec4cafb",
@@ -1305,7 +1313,7 @@
     {
       "query_id": "71e07eb37bc2fbde78de39cc21f93367",
       "query": "青岛理工大学研究生好考吗",
-      "latency_ms": 219.2,
+      "latency_ms": 335.7,
       "top_doc_ids": [
         "20cf257d2da10e4fdbda99996174d1c0",
         "324ed0470dc702a072490079a705422a",
@@ -1363,7 +1371,7 @@
     {
       "query_id": "3edc2d770ab72c6cff1e99f354b6cde2",
       "query": "生气时喂奶",
-      "latency_ms": 265.2,
+      "latency_ms": 263.9,
       "top_doc_ids": [
         "9b7029c869d97940a97af56600af7f36",
         "9bb91129d063a5d3dde65d0dc169e492",
@@ -1392,7 +1400,7 @@
     {
       "query_id": "bdacde93e6ce0c6bb95e9dde50518b0c",
       "query": "孕妇羊水破了怎么办",
-      "latency_ms": 236.8,
+      "latency_ms": 231.9,
       "top_doc_ids": [
         "1f602c29b780b3e32aaa318912f7c093",
         "8b9fc2f069fbe30a0acde7b7942f30db",
@@ -1421,7 +1429,7 @@
     {
       "query_id": "d01f4c312647a43eacda10e7dbb8ebdc",
       "query": "宝宝可以吃大蒜吗",
-      "latency_ms": 220.8,
+      "latency_ms": 260.2,
       "top_doc_ids": [
         "65c5f754900f18680be279c6741178cf",
         "42de2812f2cbf3c28cd8ae0df228ffdc",
@@ -1450,7 +1458,7 @@
     {
       "query_id": "825a908221278a020e776fc47163cfd5",
       "query": "我的世界手机版0.12.1末地传送门怎么做",
-      "latency_ms": 264.8,
+      "latency_ms": 226.5,
       "top_doc_ids": [
         "2000b2ae10315819ec1d70bb9c2d432b",
         "74dcab8f7e073f54e50fa98072f3beb4",
@@ -1479,7 +1487,7 @@
     {
       "query_id": "88e0ab946ab8f79f0b8002e82cfb9a5c",
       "query": "胡志明市到金边大巴",
-      "latency_ms": 273.5,
+      "latency_ms": 217.9,
       "top_doc_ids": [
         "2870a5d57481281dd49970f0bd3abed7",
         "58ccb868edf2022c7d5d431d6f41c284",
@@ -1508,7 +1516,7 @@
     {
       "query_id": "ff345f273c461d318302ec5648b143ce",
       "query": "苹果手机的home键规定只能按多少次吗",
-      "latency_ms": 284.2,
+      "latency_ms": 226.0,
       "top_doc_ids": [
         "145c3d297142ff205eb3f7c9f6c9a78b",
         "e5406518bc64b5afddd11524264bb475",
@@ -1537,7 +1545,7 @@
     {
       "query_id": "6c3825322040f07e783a30699f339d40",
       "query": "装双系统如何分区",
-      "latency_ms": 277.1,
+      "latency_ms": 216.4,
       "top_doc_ids": [
         "37b60397e1a988342d34da118404d7f2",
         "10c3c7551670048231e63785591eec83",
@@ -1566,7 +1574,7 @@
     {
       "query_id": "877ffb98d4aa61731c289414fc9e4f24",
       "query": "金骏眉好还是正山小种好",
-      "latency_ms": 242.3,
+      "latency_ms": 387.4,
       "top_doc_ids": [
         "231fdecb6d040f9a20511a1baa7327c7",
         "2473024d12d3450bacc30976fdc426f0",
@@ -1595,7 +1603,7 @@
     {
       "query_id": "5604e84a32578bdd4b53346ad5cc2c9c",
       "query": "广州哪看乳腺堵塞好",
-      "latency_ms": 283.6,
+      "latency_ms": 200.0,
       "top_doc_ids": [
         "f4947663a9c1d3957f0102689e144f84",
         "763cc7ba457e07cd5c9db3f6f7a73e2a",
@@ -1624,7 +1632,7 @@
     {
       "query_id": "51d433b2b5da72b67941af28a382efeb",
       "query": "东风a30怎么样",
-      "latency_ms": 265.5,
+      "latency_ms": 280.4,
       "top_doc_ids": [
         "94f71ccdc55df9f69b3aba0fd9e95806",
         "81b33bf8d22c31d93e5503195ef47e8a",
@@ -1653,7 +1661,7 @@
     {
       "query_id": "10f79eec0972a7cf6948f12ede3f11cb",
       "query": "孩子脚疼",
-      "latency_ms": 240.7,
+      "latency_ms": 238.2,
       "top_doc_ids": [
         "807348c63f86607cd8d8fcaded8ac8d7",
         "c425e07a2f630af7017db1ee1cf351cb",
@@ -1682,7 +1690,7 @@
     {
       "query_id": "8e4ca12d223846442b0a00e214c50964",
       "query": "win10的sway是什么",
-      "latency_ms": 250.6,
+      "latency_ms": 299.6,
       "top_doc_ids": [
         "3896f462c752f7c1a9254d234ee857b2",
         "17fd608656edf8623d4ad93e41c8d266",
@@ -1711,7 +1719,7 @@
     {
       "query_id": "78a28f2d77c4fbc6f7341a213f277181",
       "query": "什么是热塑性塑料",
-      "latency_ms": 249.8,
+      "latency_ms": 200.1,
       "top_doc_ids": [
         "104a4c7d688a7af40d766047110d1969",
         "c8f8cf0d2e0cc6140e3c73bd310583f7",
@@ -1740,7 +1748,7 @@
     {
       "query_id": "0fe81144c7b3042a110753b118a38c70",
       "query": "雅诗兰黛产品好用吗",
-      "latency_ms": 285.0,
+      "latency_ms": 276.3,
       "top_doc_ids": [
         "d9c089ca1503e7bfdf2139f1d7b0e43d",
         "cd950983ce2db9120d1292e6bbd31112",
@@ -1769,7 +1777,7 @@
     {
       "query_id": "80a397c2bb6e392f717b4a800e248f5f",
       "query": "网上招学徒的靠谱吗",
-      "latency_ms": 358.8,
+      "latency_ms": 244.6,
       "top_doc_ids": [
         "259f62fb5d86dbee0ca8c1407a5f8e16",
         "d20288dea9f51b2b82de114b5be52c38",
@@ -1798,7 +1806,7 @@
     {
       "query_id": "0f00391f46ae2d9795ea6d5180f52472",
       "query": "中分马尾怎么扎好看",
-      "latency_ms": 281.3,
+      "latency_ms": 228.2,
       "top_doc_ids": [
         "fe1115277f921962ad21386cffd15467",
         "c07f1035454aa92b1229abda677d69ac",
@@ -1827,7 +1835,7 @@
     {
       "query_id": "0fec63a24eb055c44daf023709015079",
       "query": "怪物猎人ol圆蚂蚱在哪抓",
-      "latency_ms": 256.5,
+      "latency_ms": 261.0,
       "top_doc_ids": [
         "701d30f0e60fa42780cb21050212a41e",
         "77a946ef4f9ab4d71885e3416d251bc9",
@@ -1856,7 +1864,7 @@
     {
       "query_id": "525483b13a2039998db8b5fc2194ec46",
       "query": "ipadappstore打开是空白",
-      "latency_ms": 279.0,
+      "latency_ms": 220.8,
       "top_doc_ids": [
         "dbe7858bd14450782dc4d5d17aeb69c3",
         "5899ba21b9a259e07f4538f69a585362",
@@ -1885,7 +1893,7 @@
     {
       "query_id": "f688510f4edb2c26361d5ed9b05bc795",
       "query": "五一劳动奖章有什么用",
-      "latency_ms": 292.3,
+      "latency_ms": 254.0,
       "top_doc_ids": [
         "340fbedf38a2f88a5652c29ad4cf6773",
         "5017813860fcf4e370f3f4156a2029f8",
@@ -1913,7 +1921,7 @@
     {
       "query_id": "25be6a480381f08bfe023bddb38ea041",
       "query": "ipad能看avi吗",
-      "latency_ms": 245.0,
+      "latency_ms": 225.3,
       "top_doc_ids": [
         "22417cd2b4ffb089f3910913c3239ffe",
         "0c34acda241b2198833897d2ac64329e",
@@ -1941,7 +1949,7 @@
     {
       "query_id": "9ef3f5f8ce2bfe44c077a1e52809dc9e",
       "query": "穷则独善其身,达则兼善天下是什么意思",
-      "latency_ms": 380.4,
+      "latency_ms": 349.5,
       "top_doc_ids": [
         "588a755efaff0cce0c4c6b7a1a8befab",
         "3fc66d374aa60ad073c8b9d2b392f6ba",
@@ -1969,7 +1977,7 @@
     {
       "query_id": "838005bdf3e49dce29f73fa7e49a8e38",
       "query": "联想手机被锁了怎么解锁",
-      "latency_ms": 245.6,
+      "latency_ms": 268.1,
       "top_doc_ids": [
         "e936e05e631994e18e39fcc8d42ebc3b",
         "fe1bc502087ce27e5f544f9cae6dbd6f",
@@ -1998,7 +2006,7 @@
     {
       "query_id": "a2772cbd988e7ebccc60d7271584393f",
       "query": "深圳湾在哪",
-      "latency_ms": 204.7,
+      "latency_ms": 274.8,
       "top_doc_ids": [
         "f3a33dff190861f0c76eb8c48efd74cd",
         "09f69a34fd1c9abd39e6e9871afd64ed",
@@ -2027,7 +2035,7 @@
     {
       "query_id": "1225a4be80761985982543f968ad2044",
       "query": "前处理 英语",
-      "latency_ms": 376.8,
+      "latency_ms": 195.9,
       "top_doc_ids": [
         "495793550348b4b1fb285d73b4e2f6dc",
         "7e4c8b16c76441d8457b862e421a00eb",
@@ -2056,7 +2064,7 @@
     {
       "query_id": "bbdbe49563c8ca12866ab5a755556059",
       "query": "博途v13怎么仿真设置",
-      "latency_ms": 281.4,
+      "latency_ms": 202.0,
       "top_doc_ids": [
         "76936eb6d2888bc083dffd285f6d110d",
         "4836182400c0864e0c4438e7a239e7c0",
@@ -2085,7 +2093,7 @@
     {
       "query_id": "9f8299991fde07ba1c9d46c82df84bac",
       "query": "龙虎少年队2 插曲",
-      "latency_ms": 339.4,
+      "latency_ms": 229.6,
       "top_doc_ids": [
         "57651bdb07feab73ead256f9348760e7",
         "9a315dcb436ad83161fa290b8b14ca93",
@@ -2114,7 +2122,7 @@
     {
       "query_id": "99282f52fca58f75fa22bb30337dc977",
       "query": "酒柜层板倾斜几度",
-      "latency_ms": 201.7,
+      "latency_ms": 203.6,
       "top_doc_ids": [
         "5fe18621a0b75f132f070bff50b4e290",
         "6a46d5b5dd1c745a6089b8397785bd2c",
@@ -2143,7 +2151,7 @@
     {
       "query_id": "8a285bc7120666ec96bbfe545c21e304",
       "query": "包皮内侧红痒",
-      "latency_ms": 218.8,
+      "latency_ms": 265.0,
       "top_doc_ids": [
         "ff6b51337c5d3c6cf1cb8ce1a7001ca2",
         "1b1291c25083f9b7295aa7139b6b1061",
@@ -2172,7 +2180,7 @@
     {
       "query_id": "c5c0306a63c5c3c5866513cd81fc5bcf",
       "query": "什么牌子粉底液好",
-      "latency_ms": 276.6,
+      "latency_ms": 286.1,
       "top_doc_ids": [
         "d19b36104e32d8d8768d10cff8f19a3c",
         "eaacd19e8facd5f0bc5951c042f8ce9d",
@@ -2200,7 +2208,7 @@
     {
       "query_id": "b56319d79968bb2a83cb898701794115",
       "query": "点痣后会不会留疤",
-      "latency_ms": 232.2,
+      "latency_ms": 247.1,
       "top_doc_ids": [
         "4af9fe8077455e6fd8f4d2c90615c4d2",
         "d77e93bd1ab18e1c74fd2d37c542cb3f",
@@ -2229,7 +2237,7 @@
     {
       "query_id": "d03c78f5093c6ac538898309837fa669",
       "query": "皮脂腺堵塞怎么办",
-      "latency_ms": 282.1,
+      "latency_ms": 257.8,
       "top_doc_ids": [
         "8cff66ada4fcfcfebf8bd2eb4b747a0b",
         "763cc7ba457e07cd5c9db3f6f7a73e2a",
@@ -2258,7 +2266,7 @@
     {
       "query_id": "4792d8aa3893fdb1570acfa6be9628a7",
       "query": "阴道口 肉球",
-      "latency_ms": 234.2,
+      "latency_ms": 197.4,
       "top_doc_ids": [
         "5cb94acd4d9ce8523b72277cda205055",
         "cffed5c88b501aa09c6aa80f73a7ffd1",
@@ -2287,7 +2295,7 @@
     {
       "query_id": "4620a15b71ca72b5aeb6789af266fcbb",
       "query": "他汀 副作用",
-      "latency_ms": 201.6,
+      "latency_ms": 211.3,
       "top_doc_ids": [
         "08bcf951f932bdde74c099270591b172",
         "12198125735e71acba9bd1896d095fb4",
@@ -2316,7 +2324,7 @@
     {
       "query_id": "d71110a9d6fe74172d0c2aaa2efc6a0c",
       "query": "吃阿莫西林后多久能喝酒",
-      "latency_ms": 214.0,
+      "latency_ms": 248.4,
       "top_doc_ids": [
         "325332e54f6c80741b08a3e8a72e088e",
         "b5be6dbf3875c5ac3cfb6ea4c2a9107d",
@@ -2343,7 +2351,7 @@
     {
       "query_id": "035158619e97c988982b612bf339cab7",
       "query": "霉菌性阴道炎用什么药治效果最好",
-      "latency_ms": 199.2,
+      "latency_ms": 211.8,
       "top_doc_ids": [
         "4e72d32c40bb80fa98d75bb00a570e7a",
         "0ad3d854dce27994e57c42cc27a60532",
@@ -2372,7 +2380,7 @@
     {
       "query_id": "e0f6e7dd1c367a7e1d726111c98b9701",
       "query": "泽拉图如何逃离神庙",
-      "latency_ms": 272.2,
+      "latency_ms": 247.6,
       "top_doc_ids": [
         "06fc1597fe2dfc4881798d7cac3e526a",
         "bc6dea068b3dd4c0c1c69e5bc9c7c061",
@@ -2401,7 +2409,7 @@
     {
       "query_id": "8775db8ef1450ad6fd0bed0dd4a65664",
       "query": "南京大学为什么没落",
-      "latency_ms": 326.0,
+      "latency_ms": 223.3,
       "top_doc_ids": [
         "48f29ed23022c574aa6bf97aaed40d8a",
         "db199aa4987adb6ccf50c44f048a7b2e",
@@ -2430,7 +2438,7 @@
     {
       "query_id": "9c8e7ace3d8d1d8fc4d7cc340dbaf263",
       "query": "阴茎长了一个小疙瘩",
-      "latency_ms": 242.9,
+      "latency_ms": 205.9,
       "top_doc_ids": [
         "f0c8a8d15540ff72194fc11bee20c785",
         "e89c557e5a07322f0373066559beea93",
@@ -2459,7 +2467,7 @@
     {
       "query_id": "ef7047c4e37f17b7e3e78dacf2b8da9a",
       "query": "怎么把奶油抹平",
-      "latency_ms": 251.0,
+      "latency_ms": 219.5,
       "top_doc_ids": [
         "d5e073dd9b75e9b6452f05694876f9a9",
         "ffe8bb1d188e9a959406a67e99d19024",
@@ -2487,7 +2495,7 @@
     {
       "query_id": "37d908390d99d9112dfe4d1d3a1ec36c",
       "query": "网络电视机卡顿解决",
-      "latency_ms": 207.2,
+      "latency_ms": 253.8,
       "top_doc_ids": [
         "64557946b7bc00c4838f7cb4c2bc00c4",
         "1177cc17db2f75a886004f5c9f6065c2",
@@ -2515,7 +2523,7 @@
     {
       "query_id": "4415d3068b590d0ccfc06a89f934e6e6",
       "query": "如何打印机扫描",
-      "latency_ms": 252.3,
+      "latency_ms": 277.8,
       "top_doc_ids": [
         "68399bc5ac6f5aa97d6411d3e7bf4b97",
         "d11b612d0b80dfe5a6def8bcc58a70c0",
@@ -2544,7 +2552,7 @@
     {
       "query_id": "4df6a21c4749dc980c15b321d8ae7e86",
       "query": "中国有几个省会城市",
-      "latency_ms": 201.7,
+      "latency_ms": 244.7,
       "top_doc_ids": [
         "de69ed1f223d1aeb0bcbe4d78d60d37f",
         "14bc4766f6e4311e2d8047a21665bf4c",
@@ -2573,7 +2581,7 @@
     {
       "query_id": "2862cea4c400e9fa3425b82c337bde94",
       "query": "一滴水从很高很高的地方自由落体下来,砸到人会不会砸伤?或砸死?",
-      "latency_ms": 256.5,
+      "latency_ms": 216.3,
       "top_doc_ids": [
         "08931f35347ca43436b06fe788e93fba",
         "f1aa2a824f660faf1419812d769aed54",
@@ -2602,7 +2610,7 @@
     {
       "query_id": "c4989b179610fd8aa0502e4fcaa03edd",
       "query": "英雄联盟个别区进不去",
-      "latency_ms": 317.1,
+      "latency_ms": 267.8,
       "top_doc_ids": [
         "e9382b683a0036f8bff3d384a7509683",
         "02de2278c97821b06cead772771fac90",
@@ -2631,7 +2639,7 @@
     {
       "query_id": "1340c013b44501c7530a4bf37d0c6f51",
       "query": "cfs和cy有什么不同",
-      "latency_ms": 204.8,
+      "latency_ms": 207.3,
       "top_doc_ids": [
         "2be9f051359ac0e563501ebd2f6c2b43",
         "9e63076a46efb91c9d1486c03ab39269",
@@ -2657,7 +2665,7 @@
     {
       "query_id": "b584f2fbe9879e9904c7714ef105afb4",
       "query": "格斗小五在哪抓",
-      "latency_ms": 302.6,
+      "latency_ms": 257.0,
       "top_doc_ids": [
         "3a7623284b44d8b7d64da446adbc0567",
         "fe0a0b68214cabcb3f52be90e68d1dbc",
@@ -2686,7 +2694,7 @@
     {
       "query_id": "9e24ce6f7ee35eff4180ffe018976c1f",
       "query": "丝印和烫印哪个好",
-      "latency_ms": 225.7,
+      "latency_ms": 250.2,
       "top_doc_ids": [
         "2f871b452c1e2ec60cb771dfd511a191",
         "0835abe2a7e30f08d6365c113447aa67",
@@ -2715,7 +2723,7 @@
     {
       "query_id": "41513580f22a15b5e1b74cc81f43d7ff",
       "query": "业胎关系是夫妻相吗",
-      "latency_ms": 266.7,
+      "latency_ms": 253.7,
       "top_doc_ids": [
         "d4f1e08ca219ba05707906f21b0ee5a4",
         "2dce4102361240c1f1e2c0d0f4e26195",
@@ -2744,7 +2752,7 @@
     {
       "query_id": "7a2cc005173ef5c150c6869e8038b7da",
       "query": "怎么煎虾",
-      "latency_ms": 255.0,
+      "latency_ms": 223.1,
       "top_doc_ids": [
         "b151ee37eab627ff67afabe9a4c6f3c5",
         "b570a182449bc9e30d87bcc6fc6f517a",
@@ -2773,7 +2781,7 @@
     {
       "query_id": "84e0c8e592ecd17828a2ee889bd8683e",
       "query": "皮肤病理检查怎么做",
-      "latency_ms": 285.4,
+      "latency_ms": 238.5,
       "top_doc_ids": [
         "0f59f8b209799e9de759c0455f58130d",
         "78ab15573160d524e80bd6619367921a",
@@ -2802,7 +2810,7 @@
     {
       "query_id": "d0a16baf7f577376ecb6953683b22762",
       "query": "k宝支付不了",
-      "latency_ms": 252.8,
+      "latency_ms": 266.3,
       "top_doc_ids": [
         "7d47d33376111b3012f660ac859b0c75",
         "bc1ed5eb1af4c2f1e0122e3f1ca23d3b",
@@ -2831,7 +2839,7 @@
     {
       "query_id": "24cd3b419ab923c4af76b5b75748b5f9",
       "query": "电子政务包括哪些内容",
-      "latency_ms": 210.2,
+      "latency_ms": 201.9,
       "top_doc_ids": [
         "c755c510202da7661fd56c72f0bb9d8d",
         "ba7543fd6c25018f1951de4b3c640068",
@@ -2854,7 +2862,7 @@
     {
       "query_id": "0470db5f2656567969f487bd6a870cc4",
       "query": "come back是什么意思",
-      "latency_ms": 201.4,
+      "latency_ms": 247.8,
       "top_doc_ids": [
         "7994e8345702856c701f77f9280dd765",
         "b272df0fd68cf1f5ba8dfa1dd9b426f2",
@@ -2883,7 +2891,7 @@
     {
       "query_id": "6904be546fd2646b4d6cad0007be3bb5",
       "query": "三个月宝宝口腔溃疡",
-      "latency_ms": 246.4,
+      "latency_ms": 192.5,
       "top_doc_ids": [
         "a4257f7e8a322a31ce7c8ea2986e93f0",
         "762bcf95919d6ca530c338f9742e71bc",

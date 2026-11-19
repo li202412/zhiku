@@ -128,6 +128,14 @@ async def main() -> None:
     agg["mrr"] = round(statistics.mean(r["mrr"] for r in rows), 4)
     agg["ndcg@10"] = round(statistics.mean(r["ndcg@10"] for r in rows), 4)
     agg["map"] = round(statistics.mean(r["map"] for r in rows), 4)
+
+    # recall@k 有结构上限：一条 query 若有 n 篇正解，top-k 最多只能召回 min(k, n) 篇。
+    # 只报裸 recall 会被误读成「检索还差十几分」，因此同时给上限与达成率。
+    for k in TOP_Ks:
+        ceilings = [min(1.0, k / max(1, r["relevant_count"])) for r in rows]
+        ratios = [r[f"recall@{k}"] / c for r, c in zip(rows, ceilings) if c > 0]
+        agg[f"recall@{k}_ceiling"] = round(statistics.mean(ceilings), 4)
+        agg[f"recall@{k}_achievement"] = round(statistics.mean(ratios), 4) if ratios else None
     lat = statistics.median(latencies)
     agg["latency_ms"] = {
         "p50": round(lat, 1),
@@ -173,6 +181,18 @@ async def main() -> None:
     md.append(f"| MRR | {agg['mrr']:.4f} |")
     md.append(f"| nDCG@10 | {agg['ndcg@10']:.4f} |")
     md.append(f"| MAP | {agg['map']:.4f} |")
+    md.append("")
+    md.append("## 结构上限与达成率")
+    md.append("")
+    md.append("recall@k 受正解数量约束：一条 query 若有 n 篇正解，top-k 最多召回 min(k,n) 篇。")
+    md.append("因此裸 recall 会低估检索质量，需同时看「达成率 = 实测 / 上限」。")
+    md.append("")
+    md.append("| 指标 | 实测 | 结构上限 | 达成率 |")
+    md.append("|---|---|---|---|")
+    for k in TOP_Ks:
+        ach = agg[f"recall@{k}_achievement"]
+        ach_txt = "-" if ach is None else f"{ach:.4f}"
+        md.append(f"| recall@{k} | {agg[f'recall@{k}']:.4f} | {agg[f'recall@{k}_ceiling']:.4f} | {ach_txt} |")
     md.append("")
     md.append("## 检索延迟（src→top-k 结果，每 query 计时）")
     md.append("")
