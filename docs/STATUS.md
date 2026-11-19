@@ -105,7 +105,7 @@
 
 | 项 | 结果 |
 | --- | --- |
-| 后端单测 | 637 passed / 24 skipped（`pytest -q --basetemp=.pytest_basetemp`） |
+| 后端单测 | 645 passed / 24 skipped（`pytest -q --basetemp=.pytest_basetemp`） |
 | 静态检查 | `ruff check .` 零告警 |
 | 前端构建 | `npm run build` 通过（15.8s） |
 | CI | GitHub Actions 三个 job：backend（ruff + pytest）／frontend（build）／compose（配置校验） |
@@ -159,8 +159,26 @@ uv run python scripts/eval_end2end.py --n-samples 30 --n-negatives 20 --max-evid
 uv run python scripts/eval_end2end.py --n-samples 30 --answer-prompt legacy --results-dir results/eval_end2end/legacy
 ```
 
-产物：`backend/results/eval_retrieval/{manifest,report}.json`、`report.md`；`backend/results/eval_end2end/{report.json, report.md, report_negatives.json}`、`legacy/report.json`。
+产物：`backend/results/eval_retrieval/{manifest,report}.json`、`report.md`；`backend/results/eval_end2end/{report.json, report.md, report_negatives.json}`，对照配置在 `gate/`（现默认）、`optimized/`、`legacy/`。
 数据集缓存在 `backend/data/eval/duretrieval/`（`data/` 已被 `.gitignore` 忽略，换机器需重下）。
+
+### 5.4 评测覆盖范围（重要：这些数字各自测的是哪一层）
+
+| 组件层 | 检索评测 | 端到端评测 | 现状 |
+| --- | --- | --- | --- |
+| 前端页面 / HTTP / SSE | 不覆盖 | 不覆盖 | 仅人工冒烟（帧序、来源块） |
+| Agent 层（LangGraph 工具循环、token 过滤） | 不覆盖 | 不覆盖 | 有单测，无质量指标 |
+| RAG 编排（规划 → 可答性 → 证据筛选 → 融合） | 不覆盖 | 覆盖 | 走真实 `AgenticRagService.run` |
+| 混合检索（向量 ∪ 全文 RRF） | **覆盖** | 覆盖 | 检索评测直接调 `search_chunks(kinds=["doc"])` |
+| 图检索（实体 → 提及 chunk） | 不覆盖 | 仅约 10% 样本触发 | 有 3 个图评测脚本，**基线未跑、无产物** |
+| 生成与来源引用 | 不覆盖 | 覆盖（脚本内另起一次模型调用） | 不经 Agent 层 |
+
+必须知道的三个边界：
+1. **「端到端」不等于产品链路**：`eval_end2end.py` 调 `AgenticRagService.run` 拿上下文，再自己拼 prompt 调模型生成，**绕过了 `agent.py` 的 LangGraph 工具轮与 SSE 转发**。因此 faithfulness 反映的是「给定证据 + 产品提示词」的生成质量，不含工具调用、会话历史、前端渲染。
+2. **图检索目前等于未被评测**：最近一轮 51 次运行中仅 5 次带图检索步骤（约 10%），且没有实体召回/多跳的独立指标。所以**不能声称图检索带来收益**，只能说「已接入、默认随规划触发」。
+3. **检索指标测的是 `kinds=["doc"]`**：产品主链路走 `hybrid_search`（`kinds=None`），在评测库中全为 doc 类型时两者等价，但严格说不是同一次调用。
+
+未做的评测（按优先级）：图检索 ablation（允许 vs 禁用同题对比）→ 图检索专项（`eval_graph_entity_recall_v2.py`、`eval_graph_multihop.py`）→ HTTP 层 E2E（打 `/chat/agent/query/stream` 断言 SSE 帧序，接入 CI）。
 
 ## 六、运行与部署
 
@@ -178,10 +196,10 @@ uv run python scripts/eval_end2end.py --n-samples 30 --answer-prompt legacy --re
 
 | 项 | 状态 |
 | --- | --- |
-| 分支 / HEAD | `main` / `b3d2cf6`（README 标准结构重写） |
+| 分支 / HEAD | `main` / `3959d88`（文档回填证据筛选 A/B） |
 | 远端 | GitHub 公开仓库，MIT |
-| 提交历史 | 初始化 → 评测命令参数修正 → README 重写 |
-| 工作区 | 存在未提交改动：评测依赖与脚本、`backend/results/`、定位文案调整、文档重组 |
+| 提交历史 | 初始化 → README 重写 → 评测收口 → CI → 文档重组 → 证据筛选 → 测量修正 → 文档回填（共 9 个） |
+| 同步状态 | 本地领先 `origin/main` 6 个提交，工作区干净 |
 
 ## 八、已知限制
 
@@ -194,7 +212,8 @@ uv run python scripts/eval_end2end.py --n-samples 30 --answer-prompt legacy --re
 | Rerank | 未接主链路，无对照数据 |
 | 安全 | 无提示词注入用例、无审计日志 |
 | 部署 | Docker 全栈未验证，2026-11-19 决定暂缓；本地方式已验证可用 |
-| 评测 | 拒答准确率、引用覆盖率无数据源 |
+| 评测覆盖 | 混合检索与 RAG 编排层有指标；**图检索仅约 10% 样本触发且无独立指标**，HTTP/前端链路仅人工冒烟，详见 §5.4 |
+| 评测统计 | 30 正样本 + 20 负样本，置信区间约 ±0.07，小于 0.1 的差异不作结论；裁判与主模型同源 |
 
 ## 更新记录
 
@@ -205,3 +224,4 @@ uv run python scripts/eval_end2end.py --n-samples 30 --answer-prompt legacy --re
 | 2026-11-19 | 评测收口：答案提示词切为产品同款，新增引用覆盖率与拒答准确率（20 条负样本）；新增 CI 门禁；能力表更新 3 项 |
 | 2026-11-19 | 部署项改为「暂缓」：Docker 全栈构建因基础镜像拉取受限未完成，决定暂不作为当前目标，本地方式为准 |
 | 2026-11-19 | 测量修正 + 证据筛选：答案质量改为只统计「源文档被召回」的样本、补 95% 置信区间、检索报告加结构上限达成率；新增证据筛选（默认开启）与强制检索开关，配对 A/B 见 §5.2.1 |
+| 2026-11-19 | 新增 §5.4 评测覆盖范围：明确三层边界（混合检索 / RAG 编排 / 生成），标注图检索仅约 10% 触发且无独立指标、HTTP 与前端仅人工冒烟；同步修正版本与已知限制 |

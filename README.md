@@ -297,6 +297,8 @@ uv run python scripts/eval_end2end.py --n-samples 30             # faithfulness 
 
 > 口径（必须连同数字一起引用）：检索为 DuRetrieval 子集，100 query / 2000 文档，**正例密度 23.1%**，因此 Recall/MRR 偏高，只用于版本间对比；答案与拒答为 30 正样本 + 20 负样本，裁判与主模型同为 `deepseek-chat`；拒答负样本取「相关文档不在入库池内」的 query，故该指标只作上界。详见 [`docs/STATUS.md`](docs/STATUS.md) 第五节。
 
+> 覆盖范围：以上指标来自**混合检索层**与**RAG 编排层**（`eval_recall.py` 直接调检索、`eval_end2end.py` 调 `AgenticRagService.run` 后独立生成）。HTTP/SSE 与前端链路为人工验证，Agent 层只有单测；图检索在最近一轮评测中仅约 10% 样本触发，**尚无独立指标**。
+
 ## 路线图与已知限制
 
 **当前限制**：Word 仅支持 `.docx`（不支持旧版 `.doc`）；扫描版 PDF 无 OCR，文本为空的文档会被跳过；权限为用户级隔离，暂无文档级私有 / 共享可见性控制；尚无 CI 质量门禁与请求级链路追踪；检索为同步调用，超大文档库需要引入异步任务与索引分片。

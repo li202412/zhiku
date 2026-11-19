@@ -16,6 +16,17 @@
 
 > 评测会把结果写到 `results/`；基线结果建议提交到仓库（`evals/results/<sha>.json`）便于对比。
 
+### 各评测脚本覆盖哪一层
+
+| 脚本 | 测的是什么 | 不测什么 |
+| --- | --- | --- |
+| `eval_recall.py` | 混合检索层（向量 ∪ 全文 RRF），直接调 `search_chunks(kinds=["doc"])` | 规划、图检索、生成 |
+| `eval_end2end.py` | RAG 编排（规划 → 检索 → 可答性 → 证据筛选 → 融合）+ 一次独立生成 | Agent 层（LangGraph 工具轮）、HTTP/SSE、前端、会话 |
+| `eval_graph_entity_recall*.py` | 图检索的实体/关系召回 | 需手动建图，未纳入基线 |
+| `eval_graph_multihop.py` | 多跳问答上图谱相对纯文本的增量 | 同上 |
+
+> 最近一轮端到端评测中，51 次运行仅 5 次触发图检索（约 10%），因此**图检索收益目前没有数据支撑**。
+
 ### `eval_end2end.py` 的关键参数
 
 | 参数 | 作用 |
