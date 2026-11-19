@@ -58,5 +58,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Prepare env file
+        # backend/.env 被 .gitignore 忽略，干净检出时不存在；先按示例生成一份再做配置校验
+        run: cp backend/.env.example backend/.env
       - name: Validate compose file
         run: docker compose config -q
