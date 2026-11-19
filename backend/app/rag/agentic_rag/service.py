@@ -5,11 +5,17 @@ from collections.abc import Callable
 from typing import Any
 
 from app.core.logger_handler import logger
+from app.core.settings import settings
 from app.rag.agentic_rag.evaluator import AnswerabilityEvaluator
 from app.rag.agentic_rag.evidence import format_evidence_context, merge_evidence
 from app.rag.agentic_rag.local_retriever import LocalRetriever
 from app.rag.agentic_rag.planner import AgenticRagPlanner
-from app.rag.agentic_rag.schemas import AgenticRagResult, AnswerabilityResult, Evidence
+from app.rag.agentic_rag.schemas import (
+    AgenticRagResult,
+    AnswerabilityResult,
+    Evidence,
+    RetrievalStep,
+)
 from app.rag.agentic_rag.web_search import WebSearchClient
 
 ThinkingCallback = Callable[[dict[str, Any]], Any]
@@ -39,6 +45,14 @@ class AgenticRagService:
         plan = await self.planner.plan(query)
         planner_ms = (time.perf_counter() - t0) * 1000
         logger.info(f"【RAG耗时】planner={planner_ms:.0f}ms source={plan.metadata.get('source', 'unknown')} need_retrieval={plan.need_retrieval} steps={len(plan.steps)}")
+        # 知识库问答不应绕过知识库：配置禁止短路时，把「无需检索」改写成一次混合检索
+        if not plan.need_retrieval and settings.PLANNER_REQUIRE_RETRIEVAL:
+            logger.info("【规划】短路被禁用，强制走一次混合检索")
+            plan = plan.model_copy(update={
+                "need_retrieval": True,
+                "steps": [RetrievalStep(tool="hybrid_search", query=query)],
+                "reason": f"{plan.reason} | forced_retrieval".strip(" |")[:200],
+            })
         await self._emit(
             thinking_callback,
             "agentic_plan",
@@ -104,6 +118,11 @@ class AgenticRagService:
         answerability = await self.evaluator.evaluate(query, local_evidences)
         eval_ms = (time.perf_counter() - t_eval) * 1000
         logger.info(f"【RAG耗时】evaluator={eval_ms:.0f}ms answerable={answerability.answerable} web_queries={answerability.web_queries}")
+
+        gated = self._gate_evidences(local_evidences, answerability)
+        if len(gated) != len(local_evidences):
+            logger.info(f"【证据裁剪】{len(local_evidences)} -> {len(gated)} 条（按可答性评估选中）")
+        local_evidences = gated
         await self._emit(
             thinking_callback,
             "answerability",
@@ -154,6 +173,24 @@ class AgenticRagService:
             answerability=answerability,
             used_web=bool(web_evidences),
         )
+
+    @staticmethod
+    def _gate_evidences(
+        evidences: list[Evidence],
+        answerability: AnswerabilityResult | None,
+    ) -> list[Evidence]:
+        """按可答性评估选中的编号裁剪证据，减少无关切片对答案的稀释。
+
+        - 默认关闭（`EVIDENCE_GATE_ENABLED`），保持既有行为不变；
+        - 未给出编号、编号全部越界时**不裁剪**，避免评估抖动导致上下文被清空；
+        - 编号是 1-based，与 `_format_evidence` 在提示词里展示的序号一致。
+        """
+        if not settings.EVIDENCE_GATE_ENABLED or not evidences or answerability is None:
+            return evidences
+        indices = {i for i in answerability.relevant_indices if 1 <= i <= len(evidences)}
+        if not indices:
+            return evidences
+        return [evidence for index, evidence in enumerate(evidences, start=1) if index in indices]
 
     async def _maybe_search_web(
         self,

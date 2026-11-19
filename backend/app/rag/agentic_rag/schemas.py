@@ -40,6 +40,8 @@ class AnswerabilityResult(BaseModel):
     confidence: float
     reason: str
     web_queries: list[str] = Field(default_factory=list)
+    # 可答性评估顺带标出的「真正能用来作答」的证据编号（1-based），用于裁剪无关证据
+    relevant_indices: list[int] = Field(default_factory=list)
 
 
 class AgenticRagResult(BaseModel):

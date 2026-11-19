@@ -64,8 +64,24 @@ def _parse_answerability(data: dict[str, Any], query: str) -> AnswerabilityResul
     web_queries = [str(q).strip() for q in (data.get("web_queries") or []) if str(q).strip()]
     if not answerable and not web_queries:
         web_queries = [query]
+
+    raw_indices = data.get("relevant_indices")
+    relevant_indices: list[int] = []
+    if isinstance(raw_indices, list):
+        for item in raw_indices:
+            try:
+                index = int(item)
+            except (TypeError, ValueError):
+                continue
+            if 1 <= index <= _MAX_EVIDENCE_ITEMS and index not in relevant_indices:
+                relevant_indices.append(index)
+
     return AnswerabilityResult(
-        answerable=answerable, confidence=confidence, reason=reason, web_queries=web_queries
+        answerable=answerable,
+        confidence=confidence,
+        reason=reason,
+        web_queries=web_queries,
+        relevant_indices=relevant_indices,
     )
 
 

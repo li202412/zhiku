@@ -42,6 +42,15 @@ class Settings(BaseSettings):
     PLANNER_TIMEOUT_S: float = 8.0
     # 是否启用 LLM 规划：false 时直接走确定性 fallback（少一次模型调用，省 1~3 秒）
     PLANNER_ENABLED: bool = True
+    # 证据筛选：由可答性评估顺带标出真正相关的证据编号，只把这些证据送进上下文，
+    # 避免无关切片稀释答案（默认关闭，改动前先用评测集对比）
+    # 证据筛选：由可答性评估顺带标出真正相关的证据编号，只把这些证据送进上下文，
+    # 避免无关切片稀释答案。默认开启；评估未给出编号时自动不裁剪（安全兜底）。
+    # 依据：26 条配对样本上证据量 -71%，faithfulness 3 改善 / 23 持平 / 0 变差。
+    EVIDENCE_GATE_ENABLED: bool = True
+    # 是否禁止规划器「无需检索」短路：知识库问答系统不应绕过知识库凭参数知识作答。
+    # 开启后，规划结果判为无需检索时仍强制走一次混合检索。
+    PLANNER_REQUIRE_RETRIEVAL: bool = False
 
     # 视觉模型（VISION_ENABLED 三态：None=默认启用 / "false"=关闭 / "true"=强制启用）    VISION_BASE_URL: str | None = None
     VISION_API_KEY: str | None = None
