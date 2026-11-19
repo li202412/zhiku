@@ -36,7 +36,7 @@ const zhCN = {
     retrieval: '检索相关知识',
     reorder: '重排序文档',
     summarize: '生成回答',
-    welcome: '你好，我是知库助手。基于企业知识库中的文档回答问题，并标注出处。',
+    welcome: '你好，我是知库助手。基于知识库中的文档回答问题，并标注出处。',
     quickQuestions: '试试这样问',
     evidence: '参考依据',
     emptyKnowledge: '知识库还是空的，先去上传几份文档吧。',
@@ -95,7 +95,7 @@ const zhCN = {
   },
   about: {
     title: '关于我们',
-    description: '知库是企业内部文档知识库问答系统：文档入库后自动切分、向量化并建立索引，提问时基于检索到的原文作答，并标注出处。',
+    description: '知库是文档知识库问答系统：文档入库后自动切分、向量化并建立索引，提问时基于检索到的原文作答，并标注出处。',
     techStack: '技术栈',
     features: '功能特性',
     featureList: {

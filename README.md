@@ -3,8 +3,9 @@
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.123-009688.svg)
+[![CI](https://github.com/li202412/zhiku/actions/workflows/ci.yml/badge.svg)](https://github.com/li202412/zhiku/actions/workflows/ci.yml)
 
-把企业内部的制度、手册、规范文档变成「问一句就有答案、并能指出出处」的知识库问答系统。
+把零散的文档变成「问一句就有答案、并能指出出处」的知识库问答系统。
 
 工作流程是 **文档入库 → 混合检索 → 证据评估 → 带来源作答**。当知识库中没有相关资料时，系统会明确说明检索不到，而不是凭常识编造条款或数字。
 
@@ -12,11 +13,11 @@
 
 ## 项目简介
 
-知库是一个面向企业文档的检索增强生成（RAG）系统。用户上传文档后，系统完成解析、切分、向量化并写入 Neo4j；提问时先由规划器决定检索策略，再通过向量检索与全文检索召回候选片段、用 RRF 融合排序，补充知识图谱证据并评估「现有证据是否足以作答」，最后由大语言模型基于上下文生成回答。
+知库是一个面向中文文档的检索增强生成（RAG）系统。用户上传文档后，系统完成解析、切分、向量化并写入 Neo4j；提问时先由规划器决定检索策略，再通过向量检索与全文检索召回候选片段、用 RRF 融合排序，补充知识图谱证据并评估「现有证据是否足以作答」，最后由大语言模型基于上下文生成回答。
 
 回答遵循三条约束：**只用检索到的资料作答**、**每个小节末尾用引用块标注来源文档**、**资料不足时明确拒答**。上下文中的资料编号仅供模型对应条目，不会出现在回答正文里。
 
-系统由后端 API、前端界面与三个基础服务组成，既可一键用 Docker Compose 启动，也可接入已有的 MySQL / Redis / Neo4j 做本地开发。
+系统由后端 API、前端界面与三个基础服务组成，可接入已有的 MySQL / Redis / Neo4j 本地运行（已验证），仓库同时提供了 Docker Compose 编排（构建验证暂缓，见「快速开始」说明）。
 
 ## 核心特性
 
@@ -89,7 +90,7 @@ flowchart LR
 - **本地开发**：Python 3.12+、`uv`、Node.js 20+、以及可用的 MySQL 8 / Redis 7 / Neo4j 5
 - 一个 OpenAI 兼容协议的对话模型 API Key（用于回答生成）；嵌入模型可复用同一通道，也可单独配置
 
-### 方式一：Docker Compose（推荐）
+### 方式一：Docker Compose
 
 ```bash
 cp backend/.env.example backend/.env
@@ -99,6 +100,8 @@ docker compose up -d --build
 ```
 
 Windows 也可直接双击 `start.bat`（自动复制 `.env.example`、构建并等待后端就绪后打开浏览器），用 `stop.bat` 停止。
+
+> 说明：Docker 方式当前**未在开发机上完成全栈构建验证**（基础镜像拉取受限），推荐先用下方「方式二」跑通；若构建卡在拉取基础镜像，见 `docs/PROBLEMS.md` 的 T8。
 
 | 服务 | 地址 |
 | --- | --- |
@@ -232,8 +235,9 @@ ZhiKu/
 │   ├── nginx.conf            # 生产镜像的反向代理配置
 │   └── Dockerfile
 ├── docs/
-│   ├── ROADMAP.md            # 后续优先级与已知限制
-│   └── troubleshooting.md    # 常见故障排查
+│   ├── STATUS.md             # 现状：能力清单、架构、评测基线
+│   ├── PLAN.md               # 后续计划、里程碑与风险
+│   └── PROBLEMS.md           # 问题与解决方法、故障排查
 ├── docker-compose.yml        # mysql + redis + neo4j + backend + frontend
 ├── start.bat / stop.bat      # Windows 一键启动 / 停止
 └── LICENSE
@@ -277,24 +281,29 @@ npm run build                 # TypeScript 类型检查 + 生产构建
 
 ```bash
 cd backend
-uv run python scripts/eval_ingest.py --n-query 50 --n-doc 200    # 注入评测语料
+uv run python scripts/eval_ingest.py --n-query 100 --n-doc 2000   # 注入评测语料（n-doc 过小会让正例占比过高，指标虚高）
 uv run python scripts/eval_recall.py --limit 10                  # Recall@k / Hit@k / MRR / nDCG@10
 uv run python scripts/eval_end2end.py --n-samples 30             # faithfulness / correctness / 延迟
 ```
 
-| 指标 | 脚本 | 基线 |
+| 指标 | 脚本 | 基线（2026-11-19） |
 | --- | --- | --- |
-| Recall@k / Hit@k / MRR / nDCG@10 | `eval_recall.py` | 待首次评测回填 |
-| faithfulness / correctness | `eval_end2end.py` | 待首次评测回填 |
-| TTFB / 端到端延迟、空召回率 | `eval_end2end.py` | 待首次评测回填 |
+| Recall@5 / @10、MRR、nDCG@10 | `eval_recall.py` | 0.856 / 0.969、0.987、0.961 |
+| 检索延迟 p95 | `eval_recall.py` | 326 ms |
+| faithfulness / correctness（1–5） | `eval_end2end.py` | 4.70 / 4.60 |
+| 来源块覆盖率 / 无编造引用 | `eval_end2end.py` | 96.7% / 100% |
+| 拒答准确率（明确拒答 / 谨慎作答 / 无依据硬答） | `eval_end2end.py` | 80% / 20% / 0% |
+| 首 token / 端到端耗时 | `eval_end2end.py` | 525 ms / 2642 ms |
 
-> 指标基线刻意留空：项目不写入未实测的数字，跑完评测后应将结果落到 `evals/results/` 并回填本表。
+> 口径（必须连同数字一起引用）：检索为 DuRetrieval 子集，100 query / 2000 文档，**正例密度 23.1%**，因此 Recall/MRR 偏高，只用于版本间对比；答案与拒答为 30 正样本 + 20 负样本，裁判与主模型同为 `deepseek-chat`；拒答负样本取「相关文档不在入库池内」的 query，故该指标只作上界。详见 [`docs/STATUS.md`](docs/STATUS.md) 第五节。
 
 ## 路线图与已知限制
 
-**当前限制**：Word 仅支持 `.docx`（不支持旧版 `.doc`）；扫描版 PDF 无 OCR，文本为空的文档会被跳过；权限为用户级隔离，暂无部门 / 密级 ACL；尚无 CI 质量门禁与请求级链路追踪；检索为同步调用，超大文档库需要引入异步任务与索引分片。
+**当前限制**：Word 仅支持 `.docx`（不支持旧版 `.doc`）；扫描版 PDF 无 OCR，文本为空的文档会被跳过；权限为用户级隔离，暂无文档级私有 / 共享可见性控制；尚无 CI 质量门禁与请求级链路追踪；检索为同步调用，超大文档库需要引入异步任务与索引分片。
 
-后续优先级（评测基线、检索期 ACL、可观测性、Rerank 对照、CI 门禁等）见 [`docs/ROADMAP.md`](docs/ROADMAP.md)；部署与使用中的问题排查见 [`docs/troubleshooting.md`](docs/troubleshooting.md)。
+后续优先级：评测口径收口（拒答准确率、引用覆盖率）→ 检索期可见性控制 → 可观测性与成本台账 → Rerank 对照实验 → CI 质量门禁，详见 [`docs/PLAN.md`](docs/PLAN.md)。
+
+当前能力边界与实测指标见 [`docs/STATUS.md`](docs/STATUS.md)；部署与使用中的常见故障、以及开发过程中修过的真实缺陷，见 [`docs/PROBLEMS.md`](docs/PROBLEMS.md)。
 
 ## 贡献指南
 

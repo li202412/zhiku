@@ -26,7 +26,7 @@ const quickQuestions = [
 ]
 
 const evidenceSourceLabels: Record<string, string> = {
-  knowledge_base: '企业知识库',
+  knowledge_base: '知识库',
   graph: '知识图谱',
   web: '外部搜索',
 }
