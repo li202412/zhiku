@@ -290,10 +290,10 @@ uv run python scripts/eval_end2end.py --n-samples 30             # faithfulness 
 | --- | --- | --- |
 | Recall@5 / @10、MRR、nDCG@10 | `eval_recall.py` | 0.856 / 0.969、0.987、0.961 |
 | 检索延迟 p95 | `eval_recall.py` | 326 ms |
-| faithfulness / correctness（1–5） | `eval_end2end.py` | 4.70 / 4.60 |
-| 来源块覆盖率 / 无编造引用 | `eval_end2end.py` | 96.7% / 100% |
-| 拒答准确率（明确拒答 / 谨慎作答 / 无依据硬答） | `eval_end2end.py` | 80% / 20% / 0% |
-| 首 token / 端到端耗时 | `eval_end2end.py` | 525 ms / 2642 ms |
+| faithfulness / correctness（1–5） | `eval_end2end.py` | 4.97 / 4.97（95% CI ±0.07） |
+| 来源块覆盖率 / 引用准确率 | `eval_end2end.py` | 100% / 97.5% |
+| 拒答（明确拒答 / 谨慎作答 / 无依据硬答） | `eval_end2end.py` | 75% / 25% / 0% |
+| 首 token / 端到端耗时 | `eval_end2end.py` | 474 ms / 2647 ms |
 
 > 口径（必须连同数字一起引用）：检索为 DuRetrieval 子集，100 query / 2000 文档，**正例密度 23.1%**，因此 Recall/MRR 偏高，只用于版本间对比；答案与拒答为 30 正样本 + 20 负样本，裁判与主模型同为 `deepseek-chat`；拒答负样本取「相关文档不在入库池内」的 query，故该指标只作上界。详见 [`docs/STATUS.md`](docs/STATUS.md) 第五节。
 
