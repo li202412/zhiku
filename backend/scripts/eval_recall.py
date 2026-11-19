@@ -142,8 +142,15 @@ async def main() -> None:
         "n_docs": len(m["doc_ids"]),
         "total_chunks": m.get("total_chunks"),
         "source_dataset": m.get("source_dataset"),
+        "relevant_ratio": m.get("relevant_ratio"),
         "aggregate": agg,
     }
+    ratio = m.get("relevant_ratio")
+    if ratio is not None and ratio > 0.2:
+        print(
+            f"[warn] 正例占比 {ratio:.0%} 过高，Recall/MRR 已被稀释失真，"
+            "该基线不可用于对外声明。请用更大的 --n-doc 重建语料。"
+        )
 
     args.results_dir.mkdir(parents=True, exist_ok=True)
     (args.results_dir / "report.json").write_text(json.dumps({"summary": summary, "rows": rows}, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -151,6 +158,10 @@ async def main() -> None:
     md = ["# 检索信息量评测报告", ""]
     md.append(f"- 数据集：{m.get('source_dataset')}  (queries={len(qids)}, docs={len(m['doc_ids'])}, chunks={m.get('total_chunks')})")
     md.append(f"- 评测用户：`{user_id}`")
+    if ratio is not None:
+        md.append(f"- 正例占比：{ratio:.1%}（库内相关文档 / 总文档，越低越接近真实检索难度）")
+        if ratio > 0.2:
+            md.append("- ⚠️ **正例占比过高，本报告指标失真，不可对外引用**，请用更大的 `--n-doc` 重建语料。")
     md.append("- 指标：recall@k（相关文档被召回占比）、hit@k（至少召回一条相关文档）、MRR（首个相关文档的倒数排名）、nDCG@10（排序质量）、MAP（平均精度）")
     md.append("")
     md.append("| 指标 | 值 |")

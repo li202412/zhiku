@@ -1,7 +1,7 @@
 [project]
 name = "zhiku-backend"
 version = "0.1.0"
-description = "知库 —— 企业内部文档知识库问答（FastAPI + LangChain + Neo4j）"
+description = "知库 —— 中文文档知识库问答（FastAPI + LangChain + Neo4j）"
 requires-python = ">=3.12"
 license = "MIT"
 authors = [
@@ -53,6 +53,9 @@ dev = [
     "black==24.10.0",
     "isort==5.13.2",
     "ruff==0.8.0",
+    # 评测脚本（scripts/eval_ingest.py 等）依赖：pandas 读 parquet，pyarrow 是其引擎
+    "pandas==2.3.3",
+    "pyarrow==26.0.1",
 ]
 
 # 文档解析依赖组：unstructured[all-docs] 含 torch/CUDA 栈（数 GB），默认安装保证本地/Docker 行为不变；

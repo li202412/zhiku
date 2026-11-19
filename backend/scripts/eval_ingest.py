@@ -119,6 +119,17 @@ async def main() -> None:
     ctitle = dict(zip(corpus["_id"].astype(str), corpus["title"].astype(str)))
     print(f"[sample] queries={len(sampled_qids)} relevant_pairs={sum(len(v) for v in relevant.values())} docs={len(doc_ids)}")
 
+    # 护栏：负例太少时 recall/MRR 会虚高到接近 1.0（库里大部分都是正例，怎么排都中），
+    # 这种基线没有信息量，必须在写入前拦下来。
+    pool = set(doc_ids)
+    relevant_in_pool = {d for ids in relevant.values() for d in ids if d in pool}
+    relevant_ratio = len(relevant_in_pool) / len(doc_ids) if doc_ids else 0.0
+    if relevant_ratio > 0.2:
+        print(
+            f"[warn] 正例占比 {relevant_ratio:.0%}（{len(relevant_in_pool)}/{len(doc_ids)}）过高："
+            "Recall/MRR 会虚高失真，指标不可信。请增大 --n-doc（建议 >=1000）让负例主导。"
+        )
+
     store = Neo4jGraphStore()
     model = EmbedModelFactory().generator()  # 与生产同款（OpenAI 兼容 /embeddings）
     splitter = AsyncTextSplitter(chunk_size=args.chunk_size, chunk_overlap=args.chunk_overlap) if args.chunk_size else AsyncTextSplitter()
@@ -165,6 +176,7 @@ async def main() -> None:
             q: [d for d in relevant.get(q, []) if d in set(doc_ids)] for q in sampled_qids
         },
         "doc_ids": doc_ids,
+        "relevant_ratio": round(relevant_ratio, 4),
         "ingested_doc_count": ingest_total,
         "total_chunks": chunk_total,
         "skipped_empty": skip_empty,

@@ -123,6 +123,7 @@ htmlcov/
 # 本地临时目录
 .tmp/
 .tmp_*/
+.pytest_basetemp/
 
 # 本地私有笔记（求职/面试材料，不随仓库发布）
 docs/private/
